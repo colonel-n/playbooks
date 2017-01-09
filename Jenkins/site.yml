@@ -2,6 +2,6 @@
 - hosts: all
   become: yes
   user: root
-  tasks:
-    - include: java1.8.yml
-    - include: jenkins.yml
+  roles:
+    - java1.8
+    - jenkins
