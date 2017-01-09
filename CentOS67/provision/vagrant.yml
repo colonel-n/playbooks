@@ -1,0 +1,15 @@
+---
+- hosts: all
+  vars:
+     p1: nginx
+  remote_user: root
+  sudo: yes
+  tasks: 
+   - name: yum install nginx
+     yum: name={{p1}}
+  
+   - name: service nginx start
+     service: name={{p1}} state=started
+
+   - name: chkconfig httpd on
+     command: /sbin/chkconfig {{p1}} on
