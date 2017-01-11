@@ -1,5 +1,0 @@
-    - name: JavaのOpenJDKをインストール
-      yum: name=java-1.8.0-openjdk state=latest
-
-    - name: JavaのOpenJDK develをインストール
-      yum: name=java-1.8.0-openjdk-devel state=latest
