@@ -1,0 +1,2 @@
+- name: install repositories
+  yum: name=git state=latest
