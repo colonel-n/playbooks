@@ -1,6 +1,0 @@
-- name: yum install nginx
-  yum: name=nginx
-- name: service nginx start
-  service: name=nginx state=started
-- name: chkconfig httpd on
-  command: /sbin/chkconfig nginx on
