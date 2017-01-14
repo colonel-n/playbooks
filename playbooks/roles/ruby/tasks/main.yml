@@ -1,49 +1,44 @@
----
-- hosts: all
-  user: root
-  become: yes
-  tasks:
-  - name: install repositories                                                                                                                                     
-    yum: name=git state=latest
+- name: install repositories                                                                                                                                     
+  yum: name=git state=latest
     
-  - name: install rbenv                                                                                                                                     
-    git: repo=https://github.com/sstephenson/rbenv.git dest=/usr/local/src/rbenv
+- name: install rbenv                                                                                                                                     
+  git: repo=https://github.com/sstephenson/rbenv.git dest=/usr/local/src/rbenv
     
-  - name: rbenvのPATHを定義                                                                                                                                    
-    shell: echo 'export RBENV_ROOT="/usr/local/src/rbenv"' >> /etc/profile.d/rbenv.sh
+- name: rbenvのPATHを定義                                                                                                                                    
+  shell: echo 'export RBENV_ROOT="/usr/local/src/rbenv"' >> /etc/profile.d/rbenv.sh
     
-  - name: PATH に追加                                                                                                                                     
-    shell: echo 'export PATH="${RBENV_ROOT}/bin:${PATH}"' >> /etc/profile.d/rbenv.sh
+- name: PATH に追加                                                                                                                                     
+  shell: echo 'export PATH="${RBENV_ROOT}/bin:${PATH}"' >> /etc/profile.d/rbenv.sh
     
-  - name: 実行ファイルに書き込み                                                                                                                                     
-    shell: echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+- name: 実行ファイルに書き込み                                                                                                                                     
+  shell: echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
    
-  - name: 上記設定の再読み込み                                                                                                                                     
-    shell: source /etc/profile.d/rbenv.sh
+- name: 上記設定の再読み込み                                                                                                                                     
+  shell: source /etc/profile.d/rbenv.sh
         
-  - name: ruby-buildのclone                                                                                                                                     
-    git: repo=https://github.com/sstephenson/ruby-build.git dest=/usr/local/src/rbenv/plugins/ruby-build
+- name: ruby-buildのclone                                                                                                                                     
+  git: repo=https://github.com/sstephenson/ruby-build.git dest=/usr/local/src/rbenv/plugins/ruby-build
 
-  - name: Rubyの依存パッケージをinstall      
-    yum: name={{item}} state=latest
-    with_items:
-      - gcc
-      - zlib-devel
-      - openssl-devel
-      - sqlite
-      - sqlite-devel
-      - mysql-devel
-      - libffi-devel
-      - readline-devel      
+- name: Rubyの依存パッケージをinstall      
+  yum: name={{item}} state=latest
+  with_items:
+    - gcc
+    - zlib-devel
+    - openssl-devel
+    - sqlite
+    - sqlite-devel
+    - mysql-devel
+    - libffi-devel
+    - readline-devel      
   
-  - name: ruby2.3.1のインストール                                                                                                                                     
-    shell: bash -lc "rbenv install 2.3.1"  
+- name: ruby2.3.3のインストール                                                                                                                                     
+  shell: bash -lc "rbenv install 2.3.3"  
     
-  - name: 環境の反映                                                                                                                                     
-    shell: bash -lc "rbenv global 2.3.1"
+- name: 環境の反映                                                                                                                                     
+  shell: bash -lc "rbenv global 2.3.3"
 
-  - name: gemの更新                                                                                                                                     
-    shell: bash -lc "gem update --system"
+- name: gemの更新                                                                                                                                     
+  shell: bash -lc "gem update --system"
     
-  - name: bundlerのインストール                                                                                                                                     
-    shell: bash -lc "gem install bundler"
+- name: bundlerのインストール                                                                                                                                     
+  shell: bash -lc "gem install bundler"
