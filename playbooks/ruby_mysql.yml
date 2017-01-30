@@ -3,6 +3,5 @@
   become: yes
   user: root
   roles:
-    - centos7
     - git
     - ruby

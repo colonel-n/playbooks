@@ -29,7 +29,8 @@
     - sqlite-devel
     - mysql-devel
     - libffi-devel
-    - readline-devel      
+    - readline-devel
+    - rubygems
   
 - name: ruby2.3.3のインストール                                                                                                                                     
   shell: bash -lc "rbenv install 2.3.3"  

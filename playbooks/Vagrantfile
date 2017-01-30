@@ -13,6 +13,42 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "centos/7"
+  config.vm.provision "shell", run: "always", inline: "systemctl restart network.service"
+
+  config.vm.define :jenkins do |jenkins|
+    jenkins.vm.hostname = "jenkins"
+    jenkins.vm.network :private_network, ip: "192.168.33.10", virtualbox__intnet: "intnet"
+    jenkins.vm.synced_folder "../data", "/home/vagrant/data"
+    jenkins.ssh.insert_key = false
+    jenkins.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "jenkins.yml"
+    end
+  end
+
+  config.vm.define :ruby do |ruby|
+    ruby.vm.hostname = "ruby"
+    ruby.vm.network :private_network, ip: "192.168.33.12", virtualbox__intnet: "intnet"
+    ruby.vm.synced_folder "../data2", "/home/vagrant/data"
+    ruby.ssh.insert_key = false
+    ruby.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "ruby_mysql.yml"
+    end
+  end
+
+  config.vm.define :node do |node|
+    node.vm.hostname = "node"
+    node.vm.network :private_network, ip: "192.168.33.13", virtualbox__intnet: "intnet"
+    node.vm.synced_folder "../data3", "/home/vagrant/data"
+    node.ssh.insert_key = false
+    node.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "node.yml"
+    end
+  end
+
+  # config.vm.define :zabbix do |zabbix|
+  #   zabbix.vm.hostname = "zabbix"
+  #   zabbix.vm.network :private_network, ip: "192.168.33.20", virtualbox__intnet: "intnet"
+  # end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -26,7 +62,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -37,9 +73,9 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../data", "/home/vagrant/data"
-  
-  config.ssh.insert_key = false
+  # config.vm.synced_folder "../data", "/home/vagrant/data"
+  #
+  # config.ssh.insert_key = false
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -73,7 +109,7 @@ Vagrant.configure("2") do |config|
   #config.vm.provision "shell", inline: <<-SHELL
   #  sudo systemctl restart network.service
   #SHELL
-  config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "jenkins.yml"
-  end
+  # config.vm.provision "ansible_local" do |ansible|
+  #   ansible.playbook = "jenkins.yml"
+  # end
 end

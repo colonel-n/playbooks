@@ -3,6 +3,6 @@
   become: yes
   user: root
   roles:
-    - centos7
-    - git
-    - ruby
+    - java1.8
+    - nginx
+    - jenkins

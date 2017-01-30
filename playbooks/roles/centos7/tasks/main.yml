@@ -1,2 +1,6 @@
 - name: network.service restart for ip attache
   shell: systemctl restart network.service
+  become: yes
+- name: yum update
+  yum: name=*
+  become: yes
